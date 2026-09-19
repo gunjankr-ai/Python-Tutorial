@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
+  body {
+    background: #070F1E;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .slide-box {
+    width: 1200px;
+    height: 675px;
+    background: #0B1727;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  
+  /* Header */
+  .header {
+    background: linear-gradient(90deg, #0E2038 0%, #162E50 100%);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #00D4B2;
+  }
+  .header-left h1 {
+    color: #FFFFFF;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+  }
+  .header-left p {
+    color: #00D4B2;
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .team-tag {
+    background: rgba(0, 212, 178, 0.12);
+    color: #00D4B2;
+    border: 1px solid #00D4B2;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 20px;
+  }
+
+  /* Grid Layout */
+  .grid-container {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    padding: 30px 40px;
+    background: radial-gradient(circle at 50% 0%, rgba(0, 212, 178, 0.04) 0%, transparent 70%);
+  }
+
+  /* Column Cards */
+  .stack-card {
+    background: #101F33;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    position: relative;
+    overflow: hidden;
+  }
+  .stack-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .stack-card.c1::before { background: #00D4B2; }
+  .stack-card.c2::before { background: #38BDF8; }
+  .stack-card.c3::before { background: #818CF8; }
+
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .card-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 800;
+  }
+  .c1 .card-icon { background: rgba(0, 212, 178, 0.15); color: #00D4B2; }
+  .c2 .card-icon { background: rgba(56, 189, 248, 0.15); color: #38BDF8; }
+  .c3 .card-icon { background: rgba(129, 140, 248, 0.15); color: #818CF8; }
+
+  .card-title-group h3 {
+    color: #F8FAFC;
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .card-title-group span {
+    color: #64748B;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  /* Feature Items */
+  .tech-items {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    flex: 1;
+  }
+  .item-row {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .tech-name {
+    color: #E2E8F0;
+    font-size: 12.5px;
+    font-weight: 700;
+  }
+  .tech-role {
+    color: #94A3B8;
+    font-size: 11px;
+    line-height: 1.3;
+  }
+  .tag-badge {
+    font-size: 9.5px;
+    font-weight: 700;
+    padding: 2px 7px;
+    border-radius: 4px;
+    letter-spacing: 0.3px;
+  }
+  .c1 .tag-badge { background: rgba(0, 212, 178, 0.15); color: #00D4B2; }
+  .c2 .tag-badge { background: rgba(56, 189, 248, 0.15); color: #38BDF8; }
+  .c3 .tag-badge { background: rgba(129, 140, 248, 0.15); color: #818CF8; }
+
+  /* Bottom Callout Banner */
+  .bottom-bar {
+    background: #091322;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 12px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .stat-group {
+    display: flex;
+    gap: 32px;
+  }
+  .stat-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .stat-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #00D4B2;
+  }
+  .stat-label {
+    color: #94A3B8;
+    font-size: 11.5px;
+  }
+  .stat-label strong {
+    color: #F8FAFC;
+  }
+</style>
+</head>
+<body>
+
+<div class="slide-box">
+  
+  <!-- Slide Header -->
+  <div class="header">
+    <div class="header-left">
+      <h1>SYSTEM ARCHITECTURE & TECHNOLOGY STACK</h1>
+      <p>AI-MediKiosk • PS ID: 26047 • Enterprise Full-Stack Blueprint</p>
+    </div>
+    <div class="team-tag">Team JSR | SIH 2026</div>
+  </div>
+
+  <!-- 3-Column Technology Matrix -->
+  <div class="grid-container">
+
+    <!-- FRONTEND CARD -->
+    <div class="stack-card c1">
+      <div class="card-top">
+        <div class="card-icon">🖥️</div>
+        <div class="card-title-group">
+          <h3>Client-Side Tier</h3>
+          <span>Kiosk & Doctor Dashboard</span>
+        </div>
+      </div>
+      <div class="tech-items">
+        <div class="item-row">
+          <div class="item-header">
+            <span class="tech-name">React 18 + Vite 5</span>
+            <span class="tag-badge">Core UI</span>
+          </div>
+          <span class="tech-role">High-speed rendering for OPD touch terminals.</span>
+        </div>
+        <div class="item-row">
+          <div class="item-header">
+            <span class="tech-name">TypeScript + Tailwind</span>
+            <span class="tag-badge">Design</span>
+          </div>
+          <span class="tech-role">Type-safe styling with mobile-first responsiveness.</span>
+        </div>
+        <div class="item-row">
+          <div class="item-header">
+            <span class="tech-name">Web Speech API</span>
+            <span class="tag-badge">Voice</span>
+          </div>
+          <span class="tech-role">Vernacular ASR & TTS voice-guided clinical intake.</span>
+        </div>
+        <div class="item-row">
+          <div class="item-header">
+            <span class="tech-name">Recharts & Lucide</span>
+            <span class="tag-badge">Analytics</span>
+          </div>
+          <span class="tech-role">Physician vitals dashboard and interactive body map.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- BACKEND CARD -->
+    <div class="stack-card c2">
+      <div class="card-top">
+        <div class="card-icon">⚙️</div>
+        <div class="card-title-group">
+          <h3>Server-Side Tier</h3>
+          <span>APIs, AI & Security</span>
+        </div>
+      </div>
+      <div class="tech-items">
+        <div class="item-row">
+          <div class="item-header">
+            <span class="tech-name">Node.js + Express.js</span>
+            <span class="tag-badge">Runtime</span>
+          </div>
+          <span class="tech-role">Asynchronous microservices & clinical routing.</span>
+        </div>
+        <div class="item-row">
+          <div class="item-header">
+            <span class="tech-name">Socket.io Engine</span>
+            <span class="tag-badge">Triage</span>
+          </div>
+          <span class="tech-role">Sub-second push notifications for Red-Flag alerts.</span>
+        </div>
+        <div class="item-row">
+          <div class="item-header">
+            <span class="tech-name">JWT + Rate Limiting</span>
+            <span class="tag-badge">Security</span>
+          </div>
+          <span class="tech-role">Granular DPDP Act compliance & RBAC doctor access.</span>
+        </div>
+        <div class="item-row">
+          <div class="item-header">
+            <span class="tech-name">FastAPI (Python)</span>
+            <span class="tag-badge">AI / OCR</span>
+          </div>
+          <span class="tech-role">Prescription entity extraction & Ayush rule engine.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- DATABASE & STORAGE CARD -->
+    <div class="stack-card c3">
+      <div class="card-top">
+        <div class="card-icon">🗄️</div>
+        <div class="card-title-group">
+          <h3>Storage & Standards</h3>
+          <span>Relational, NoSQL & ABDM</span>
+        </div>
+      </div>
+      <div class="tech-items">
+        <div class="item-row">
+          <div class="item-header">
+            <span class="tech-name">Supabase (PostgreSQL 15)</span>
+            <span class="tag-badge">Primary DB</span>
+          </div>
+          <span class="tech-role">17 relational tables for patients, triage, & audits.</span>
+        </div>
+        <div class="item-row">
+          <div class="item-header">
+            <span class="tech-name">MongoDB & MinIO</span>
+            <span class="tag-badge">Unstructured</span>
+          </div>
+          <span class="tech-role">Prescription scans & raw intake session logs.</span>
+        </div>
+        <div class="item-row">
+          <div class="item-header">
+            <span class="tech-name">Offline Cache + JSON</span>
+            <span class="tag-badge">Resilience</span>
+          </div>
+          <span class="tech-role">Local edge caching during OPD network dropouts.</span>
+        </div>
+        <div class="item-row">
+          <div class="item-header">
+            <span class="tech-name">HL7 FHIR R4 Ready</span>
+            <span class="tag-badge">ABDM</span>
+          </div>
+          <span class="tech-role">Seamless export to Hospital Information Systems.</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Bottom Metric Strip -->
+  <div class="bottom-bar">
+    <div class="stat-group">
+      <div class="stat-item">
+        <div class="stat-dot"></div>
+        <span class="stat-label">Architecture: <strong>Event-Driven Microservices</strong></span>
+      </div>
+      <div class="stat-item">
+        <div class="stat-dot" style="background:#38BDF8;"></div>
+        <span class="stat-label">Schema: <strong>17 Normalized Tables</strong></span>
+      </div>
+      <div class="stat-item">
+        <div class="stat-dot" style="background:#818CF8;"></div>
+        <span class="stat-label">Compliance: <strong>ABDM M1/M2 & DPDP 2023</strong></span>
+      </div>
+    </div>
+    <span style="color: #64748B; font-size: 11px;">MediKiosk Technical Blueprint</span>
+  </div>
+
+</div>
+
+</body>
+</html>
